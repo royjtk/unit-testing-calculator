@@ -1,0 +1,5 @@
+# create gitignore file for python
+# Byte-compiled / optimized / DLL files
+.pytest_cache/
+src/kalkulator/__pycache__/
+test/__pycache__/
