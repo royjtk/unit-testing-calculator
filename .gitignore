@@ -3,3 +3,6 @@
 .pytest_cache/
 src/kalkulator/__pycache__/
 test/__pycache__/
+build/
+dist/
+main.spec
