@@ -16,21 +16,76 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.13'
       
       - name: Install Poetry
-        uses: snok/install-poetry@v1
+        uses: abatilo/actions-poetry@v2
         with:
-          version: 1.5.1
+          poetry-version: '2.1.2'
       
       - name: Install dependencies
         run: poetry install
+      
+      - name: Create assets directory
+        run: mkdir -p tests/assets
+      
+      - name: Create CSS file for reports
+        run: |
+          cat > tests/assets/style.css << 'EOL'
+          .coverage-summary {
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+
+          .coverage-summary h2 {
+            color: #333;
+            margin-bottom: 10px;
+          }
+
+          .coverage-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+          }
+
+          .coverage-table th, .coverage-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+          }
+
+          .coverage-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+          }
+
+          .coverage-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+
+          .coverage-table tr:hover {
+            background-color: #eaf7ff;
+          }
+
+          /* Style for coverage percentages */
+          .high-coverage {
+            color: green;
+          }
+
+          .medium-coverage {
+            color: orange;
+          }
+
+          .low-coverage {
+            color: red;
+          }
+          EOL
       
       - name: Run tests with coverage
         run: poetry run pytest --cov=src
       
       - name: Generate HTML coverage report
-        run: poetry run pytest --html=test_report.html --self-contained-html --cov=src
+        run: poetry run pytest --html=test_report.html --self-contained-html --css=tests/assets/style.css --cov=src
       
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -48,12 +103,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.13'
       
       - name: Install Poetry
-        uses: snok/install-poetry@v1
+        uses: abatilo/actions-poetry@v2
         with:
-          version: 1.5.1
+          poetry-version: '2.1.2'
       
       - name: Install dependencies
         run: |

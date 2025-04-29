@@ -5,7 +5,7 @@ Aplikasi sederhana untuk demonstrasi unit testing dan pelaporan hasil pengujian.
 ## Kebutuhan Sistem
 
 - Python 3.13.x
-- Poetry (package manager)
+- Poetry (package manager) 2.1.2
 
 ## Pengaturan Proyek
 
@@ -55,7 +55,7 @@ Pengujian dibagi menjadi beberapa kategori:
 
 ```
 kalkulator/
-├── src/              # Kode sumber aplikasi
+├── src/              # Kode sumber aplikasi yang di test
 ├── tests/            # Pengujian
 │   ├── conftest.py   # Konfigurasi pengujian dan formatter laporan
 │   ├── assets/       # Asset untuk laporan HTML
