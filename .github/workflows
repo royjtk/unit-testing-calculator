@@ -1,0 +1,68 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, staging ]
+  pull_request:
+    branches: [ main, staging ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+      
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+      
+      - name: Install dependencies
+        run: poetry install
+      
+      - name: Run tests with coverage
+        run: poetry run pytest --cov=src
+      
+      - name: Generate HTML coverage report
+        run: poetry run pytest --html=test_report.html --self-contained-html --cov=src
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test_report.html
+          
+  build:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+      
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+      
+      - name: Install dependencies
+        run: |
+          poetry install
+          poetry add pyinstaller
+      
+      - name: Build executable
+        run: poetry run pyinstaller --onefile src/kalkulator/main.py
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: kalkulator-app
+          path: dist/main.exe
