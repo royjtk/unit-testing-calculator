@@ -32,7 +32,7 @@ jobs:
         run: poetry run pytest --html=test_report.html --self-contained-html --cov=src
       
       - name: Upload test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: test_report.html
@@ -62,17 +62,19 @@ jobs:
         run: poetry run pyinstaller --onefile src/kalkulator/main.py
       
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: kalkulator-app
           path: dist/main.exe
 
   release:
     needs: build
-    if: startsWith(github.ref, 'refs/tags/')
+    # Only run on main branch pushes, not on staging or PRs
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Download built artifact
+        uses: actions/download-artifact@v3
         with:
           name: kalkulator-app
           
@@ -80,5 +82,14 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: main.exe
-          name: Release ${{ github.ref_name }}
-          body: Automatic release from CI/CD pipeline
+          name: Release ${{ github.run_number }}
+          tag_name: v1.0.${{ github.run_number }}
+          body: |
+            ## Automatic Release from CI/CD Pipeline
+            
+            Release dari push ke branch main.
+            
+            ### Included in this release:
+            - Executable Windows application
+            - Full test coverage
+          token: ${{ secrets.GITHUB_TOKEN }}
