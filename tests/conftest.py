@@ -44,11 +44,20 @@ def pytest_runtest_makereport(item, call):
 def pytest_html_results_summary(prefix, summary, postfix):
     """Add coverage info to the summary section of the report"""
     try:
-        from coverage import Coverage
-        cov = Coverage()
+        import json
+        import subprocess
         
-        if os.path.exists('.coverage'):
-            cov.load()
+        # Jalankan pytest-cov dengan output JSON untuk mendapatkan data coverage berbasis baris
+        result = subprocess.run(
+            ["pytest", "--cov=src", "--cov-report=json"], 
+            capture_output=True, 
+            text=True
+        )
+        
+        # Baca file coverage.json yang dihasilkan
+        if os.path.exists("coverage.json"):
+            with open("coverage.json", "r") as f:
+                coverage_data = json.load(f)
             
             # Create coverage data table for summary
             prefix.extend([
@@ -58,19 +67,19 @@ def pytest_html_results_summary(prefix, summary, postfix):
                 '<tr><th>File</th><th>Statements</th><th>Missing</th><th>Coverage</th></tr>'
             ])
             
-            # Add coverage data
+            # Total untuk semua file
             total_statements = 0
             total_missed = 0
             
-            # Add rows for each file
-            for filename in sorted(cov.get_data().measured_files()):
-                rel_filename = os.path.relpath(filename)
-                # analysis returns a tuple of (statements, excluded, missing, errors)
-                analysis = cov.analysis(filename)
-                statements = len(analysis[0])
-                missing = len(analysis[2])
-                
+            # Hanya ambil file dari direktori src
+            for filename, file_data in coverage_data["files"].items():
+                if not filename.startswith("src"):
+                    continue
+                    
+                statements = file_data["summary"]["num_statements"]
+                missing = file_data["summary"]["missing_lines"]
                 covered = statements - missing
+                
                 total_statements += statements
                 total_missed += missing
                 
@@ -86,12 +95,12 @@ def pytest_html_results_summary(prefix, summary, postfix):
                         coverage_class = 'low-coverage'
                     
                     prefix.append(
-                        f'<tr><td>{rel_filename}</td>'
+                        f'<tr><td>{filename}</td>'
                         f'<td>{statements}</td>'
                         f'<td>{missing}</td>'
                         f'<td class="{coverage_class}">{percentage:.2f}%</td></tr>'
                     )
-                    
+            
             # Calculate total coverage
             if total_statements > 0:
                 total_coverage = ((total_statements - total_missed) / total_statements) * 100
@@ -111,5 +120,8 @@ def pytest_html_results_summary(prefix, summary, postfix):
                 )
             
             prefix.append('</table></div>')
+            
+            # Hapus file coverage.json setelah digunakan
+            os.remove("coverage.json")
     except Exception as e:
         prefix.append(f'<div>Error generating coverage report: {str(e)}</div>')

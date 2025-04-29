@@ -31,7 +31,7 @@ poetry run pytest
 ### Menjalankan Pengujian dengan Laporan HTML
 
 ```bash
-poetry run pytest --html=test_report.html --self-contained-html --cov=src
+poetry run pytest --html=test_report.html --self-contained-html --css=assets/style.css --cov=src
 ```
 
 Laporan pengujian akan menghasilkan:
