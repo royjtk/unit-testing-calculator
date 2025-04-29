@@ -32,6 +32,7 @@ def calculator_view():
             result = calc.divide(operand1, operand2)
         
         print(f"Hasil: {operand1} {operator} {operand2} = {result}")
-        input("Tekan tombol apa saja untuk keluar...")
     except ValueError as e:
         print(e)
+    
+    input("Tekan tombol apa saja untuk keluar...")
