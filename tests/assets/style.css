@@ -1,0 +1,47 @@
+.coverage-summary {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.coverage-summary h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.coverage-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.coverage-table th, .coverage-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.coverage-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.coverage-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.coverage-table tr:hover {
+    background-color: #eaf7ff;
+}
+
+/* Style for coverage percentages */
+.high-coverage {
+    color: green;
+}
+
+.medium-coverage {
+    color: orange;
+}
+
+.low-coverage {
+    color: red;
+}

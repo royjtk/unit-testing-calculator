@@ -2,7 +2,7 @@
 # Byte-compiled / optimized / DLL files
 .pytest_cache/
 src/kalkulator/__pycache__/
-test/__pycache__/
+tests/__pycache__/
 build/
 dist/
 main.spec
