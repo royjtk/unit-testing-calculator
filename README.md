@@ -33,6 +33,11 @@ poetry run pytest
 ```bash
 poetry run pytest --html=test_report.html --self-contained-html --css=tests/assets/style.css --cov=src
 ```
+### Menjalankan Pengujian modul validate saja dengan Laporan HTML
+
+```bash
+poetry run pytest tests/test_module/test_validate_operand.py tests/test_module/test_validate_operator.py tests/test_module/test_validator_helpers.py --html=test_report.html --self-contained-html --css=tests/assets/style.css --cov=src
+```
 
 Laporan pengujian akan menghasilkan:
 - Daftar tes yang dijalankan beserta deskripsinya
@@ -59,7 +64,8 @@ kalkulator/
 ├── tests/            # Pengujian
 │   ├── conftest.py   # Konfigurasi pengujian dan formatter laporan
 │   ├── assets/       # Asset untuk laporan HTML
-│   └── test_*.py     # File pengujian
+│   └── test_module/
+│       └── test_*.py     # File pengujian
 └── test_report.html  # Laporan hasil pengujian (setelah dijalankan)
 ```
 
