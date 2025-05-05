@@ -64,7 +64,8 @@ kalkulator/
 ├── tests/            # Pengujian
 │   ├── conftest.py   # Konfigurasi pengujian dan formatter laporan
 │   ├── assets/       # Asset untuk laporan HTML
-│   └── test_*.py     # File pengujian
+│   └── test_module/
+│       └── test_*.py     # File pengujian
 └── test_report.html  # Laporan hasil pengujian (setelah dijalankan)
 ```
 
