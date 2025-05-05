@@ -1,7 +1,7 @@
 # test_calculator.py
 
 import pytest
-from calculator import show_header
+from src.kalkulator.view import show_header
 
 @pytest.mark.parametrize("expected_output", [
     "====== Kalkulator Sederhana ======"

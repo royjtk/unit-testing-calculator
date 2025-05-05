@@ -1,7 +1,7 @@
 # test_calculator.py
 
 import pytest
-from calculator import show_result
+from src.kalkulator.view import show_result
 
 @pytest.mark.parametrize(
     "operand1, operator, operand2, result, expected_output",
