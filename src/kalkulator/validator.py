@@ -1,8 +1,8 @@
 class Validator:
     def validate_operand(self, operand):
-        if not isinstance(operand, (int, float)):
+        if not self.is_number(operand):
             raise ValueError("Error: Operand harus berupa angka.")
-        if operand < -32768 or operand > 32767:
+        if not self.is_number_in_range(operand):
             raise ValueError("Error: Angka harus berada dalam rentang -32,768 hingga 32,767.")
         return operand
 
