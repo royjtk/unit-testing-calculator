@@ -14,7 +14,7 @@ class Validator:
     def is_not_zero_divisor(self, operand):
         if operand == 0:
             raise ValueError("Error: Pembagi tidak boleh nol.")
-        return True
+        return operand
 
     def is_number(self, operand):
         return isinstance(operand, (int, float))
