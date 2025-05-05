@@ -1,18 +1,16 @@
 import pytest
-from src.kalkulator.validator import Validator   # sesuaikan import kalau modulmu di path berbeda
+from src.kalkulator.validator import Validator
 
-v = Validator()
-
-# --- TC1 : operator tidak valid --------------------------------------------
 def test_validate_operator_invalid():
     """Menguji validasi dengan operator yang tidak valid (:) yang seharusnya menghasilkan ValueError."""
-    # parameter ":" seharusnya me-raise ValueError
-    with pytest.raises(ValueError, match=r"Error: Operator yang valid hanya \+, -, \*, /."):
-        v.validate_operator(":")
+    validator = Validator()
+    with pytest.raises(ValueError) as excinfo:
+        validator.validate_operator(":")
+    assert str(excinfo.value) == "Error: Operator yang valid hanya +, -, *, /."
 
-# --- TC2 : keempat operator valid ------------------------------------------
-@pytest.mark.parametrize("op", ["+", "-", "*", "/"])
-def test_validate_operator_valid(op):
+@pytest.mark.parametrize("operator", ["+", "-", "*", "/"])
+def test_validate_operator_valid(operator):
     """Menguji validasi dengan operator yang valid (+, -, *, /) yang seharusnya mengembalikan operator tersebut."""
-    # fungsi harus mengembalikan operator yang sama
-    assert v.validate_operator(op) == op
+    validator = Validator()
+    result = validator.validate_operator(operator)
+    assert result == operator
