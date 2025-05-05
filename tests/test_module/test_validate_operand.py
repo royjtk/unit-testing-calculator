@@ -13,7 +13,7 @@ def test_validate_operand_not_number():
 @pytest.mark.parametrize("value", [-32769, 32770])
 def test_validate_operand_out_of_range(value):
     """Menguji validasi dengan operand di luar rentang (-32768...32767) yang seharusnya menghasilkan ValueError."""
-    with pytest.raises(ValueError, match=r"Error: Angka harus berada dalam rentang"):
+    with pytest.raises(ValueError, match=r"Error: Angka harus berada dalam rentang -32,768 hingga 32,767."):
         v.validate_operand(value)
 
 # --- TC3 : operand valid ----------------------------------------------------
