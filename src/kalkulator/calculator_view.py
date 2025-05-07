@@ -2,8 +2,8 @@
 
 from kalkulator.calculator import Calculator
 from kalkulator.validator import Validator
-
-
+from kalkulator.view import show_header, show_result, show_error, prompt_exit, prompt_input_operand1, prompt_input_operator, prompt_input_operand2
+from kalkulator.get_input import get_operand, get_operator
 
 
 
@@ -12,27 +12,23 @@ def calculator_view():
     validator = Validator()
     
     try:
-        print("=== Kalkulator Sederhana ===")
-        operand1 = float(input("Masukkan operand pertama: "))
+        show_header()
+        prompt_input_operand1()
+        operand1 = get_operand()
         operand1 = validator.validate_operand(operand1)
         
-        operator = input("Masukkan operator (+, -, *, /): ")
+        prompt_input_operator()
+        operator = get_operator()
         operator = validator.validate_operator(operator)
         
-        operand2 = float(input("Masukkan operand kedua: "))
+        prompt_input_operand2()
+        operand2 = get_operand()
         operand2 = validator.validate_operand(operand2)
         
-        if operator == '+':
-            result = calc.add(operand1, operand2)
-        elif operator == '-':
-            result = calc.subtract(operand1, operand2)
-        elif operator == '*':
-            result = calc.multiply(operand1, operand2)
-        elif operator == '/':
-            result = calc.divide(operand1, operand2)
+        result = calc.perform_operation(operator, operand1, operand2)
         
-        print(f"Hasil: {operand1} {operator} {operand2} = {result}")
+        show_result(operand1, operator, operand2, result)
     except ValueError as e:
-        print(e)
+        show_error(str(e))
     
-    input("Tekan tombol apa saja untuk keluar...")
+    prompt_exit()

@@ -12,7 +12,7 @@ def show_error(message):
 
 def prompt_exit():
     """Menampilkan pesan untuk keluar."""
-    input("Tekan tombol apa saja untuk keluar...")
+    print("Tekan tombol apa saja untuk keluar...")
     
 def prompt_input_operand1():
     """Menampilkan pesan untuk input operand pertama."""
