@@ -75,4 +75,4 @@ kalkulator/
 poetry run pyinstaller --onefile src/kalkulator/main.py
 ```
 
-[![CI/CD Pipeline](https://github.com/username/kalkulator/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/username/kalkulator/actions/workflows/ci-cd.yml)
+[Klik di sini untuk melihat hasil testing](https://royjtk.github.io/unit-testing-calculator/test_report.html)
